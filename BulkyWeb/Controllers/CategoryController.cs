@@ -17,4 +17,17 @@ public class CategoryController : Controller
         List<Category> objCategoryList = _db.Categories.ToList();
         return View(objCategoryList);
     }
+    
+    public IActionResult Create()
+    {
+        return View();
+    }
+    // POST
+    [HttpPost]
+    public IActionResult Create(Category obj)
+    {
+        _db.Categories.Add(obj);
+        _db.SaveChanges();
+        return RedirectToAction("Index"); // коли людина створила, перенаправляємо її на Index
+    }
 }
