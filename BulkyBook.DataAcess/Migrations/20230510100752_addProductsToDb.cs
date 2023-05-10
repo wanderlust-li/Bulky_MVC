@@ -29,6 +29,11 @@ namespace BulkyBook.DataAcess.Migrations
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Products",
+                columns: new[] { "Id", "Author", "Description", "ISBN", "ListPrice", "Price", "Price100", "Price50", "Title" },
+                values: new object[] { 1, "Billy Spark", "Praesent vitae sodales libero.", "SWD999901", 99.0, 90.0, 80.0, 85.0, "Fortune of Time" });
         }
 
         /// <inheritdoc />

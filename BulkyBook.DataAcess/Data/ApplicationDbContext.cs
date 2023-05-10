@@ -27,7 +27,22 @@ namespace BulkyBook.DataAcess.Data
                 new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
                 new Category { Id = 3, Name = "History", DisplayOrder = 3 }
             );
-            
+            modelBuilder.Entity<Product>().HasData(
+                new Product
+                {
+                    Id = 1, 
+                    Title = "Fortune of Time", 
+                    Author = "Billy Spark",
+                    Description = "Praesent vitae sodales libero.",
+                    ISBN = "SWD999901",
+                    ListPrice = 99,
+                    Price = 90,
+                    Price50 = 85,
+                    Price100 = 80,
+                    CategoryId = 1,
+                    ImageUrl = ""
+                }
+            );
         }
     }
 }
