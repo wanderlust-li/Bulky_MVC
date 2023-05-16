@@ -23,6 +23,7 @@ namespace BulkyBook.DataAcess.Data
         public DbSet<Category> Categories { get; set; } = null!;
         public DbSet<Product> Products { get; set; } = null!;
         public DbSet<Company> Companies { get; set; } = null!;
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; } = null!;
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
