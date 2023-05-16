@@ -22,10 +22,16 @@ public class HomeController : Controller
         return View(productList);
     }
     
-    public IActionResult Details(int productID)
+    public IActionResult Details(int productId)
     {
-        Product product = _unitOfWork.Product.Get(u => u.Id ==productID, includePropetries: "Category");
-        return View(product);
+        ShoppingCart cartObj = new()
+        {
+            Count=1,
+            ProductId=productId,
+            Product = _unitOfWork.Product.Get(u => u.Id == productId, includePropetries: "Category"),
+        };
+
+        return View(cartObj);
     }
 
     public IActionResult Privacy()
