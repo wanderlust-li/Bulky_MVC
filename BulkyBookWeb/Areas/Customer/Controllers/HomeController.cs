@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
+using System.Security.Claims;
 using BulkyBook.DataAcess.Repository.IRepository;
 using Microsoft.AspNetCore.Mvc;
 using BulkyBook.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BulkyBookWeb.Areas.Customer.Controllers;
 [Area("Customer")]
@@ -24,14 +26,27 @@ public class HomeController : Controller
     
     public IActionResult Details(int productId)
     {
-        ShoppingCart cartObj = new()
+        ShoppingCart cart = new()
         {
             Count=1,
             ProductId=productId,
             Product = _unitOfWork.Product.Get(u => u.Id == productId, includePropetries: "Category"),
         };
 
-        return View(cartObj);
+        return View(cart);
+    }
+    [HttpPost]
+    [Authorize]
+    public IActionResult Details(ShoppingCart shoppingCart)
+    {
+        var claimsIdentity = (ClaimsIdentity)User.Identity;
+        var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+        shoppingCart.ApplicationUserId = userId;
+        
+        _unitOfWork.ShoppingCart.Add(shoppingCart);
+        _unitOfWork.Save();
+        
+        return RedirectToAction(nameof(Index));
     }
 
     public IActionResult Privacy()
