@@ -20,9 +20,13 @@ public class Repository<T> : IRepository<T> where T : class
     }
 
     // Category, CoverType
-    public IEnumerable<T> GetAll(string? includePropetries = null)
+    public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includePropetries = null)
     {
         IQueryable<T> query = dbSet;
+        if (filter != null)
+            query = query.Where(filter);
+        
+        
         if (!string.IsNullOrEmpty(includePropetries))
         {
             foreach (var includeProp in includePropetries.Split(new char[] { ',' },
@@ -35,9 +39,14 @@ public class Repository<T> : IRepository<T> where T : class
         return query.ToList();
     }
 
-    public T Get(Expression<Func<T, bool>> filter, string? includePropetries = null)
+    public T Get(Expression<Func<T, bool>> filter, string? includePropetries = null, bool tracked = false)
     {
-        IQueryable<T> query = dbSet;
+        IQueryable<T> query;
+        if (tracked)
+            query = dbSet;
+        else
+            query = dbSet.AsNoTracking();
+        
         query = query.Where(filter);
         if (!string.IsNullOrEmpty(includePropetries))
         {
@@ -47,6 +56,7 @@ public class Repository<T> : IRepository<T> where T : class
                 query = query.Include(includeProp);
             }
         }
+
         return query.FirstOrDefault();
     }
 

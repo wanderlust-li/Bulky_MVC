@@ -27,9 +27,10 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Privacy">Privacy</a>
                     </li>
+                    
 
-                    @if (User.IsInRole(SD.Role_Admin))
-                    {
+                    @*@if (User.IsInRole(SD.Role_Admin))
+                    {*@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                                 Content Management
@@ -49,8 +50,13 @@
                                 </li>
                             </ul>
                         </li>
-                    }
-
+                     @* } *@
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                            <i class="bi bi-cart"></i>  &nbsp;(0)
+                        </a>
+                    </li>
+                    
                 </ul>
                 <partial name="_LoginPartial"/>
             </div>
